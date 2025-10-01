@@ -180,12 +180,102 @@
             width: 100%;
             height: 400px;
             background: #000;
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
         }
 
         .video-player {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            cursor: pointer;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container:hover .video-controls {
+            transform: translateY(0);
+        }
+
+        .video-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .video-progress-bar {
+            height: 100%;
+            background: #fbbf24;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .video-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .video-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .video-time {
+            color: white;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .video-container:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-overlay:hover {
+            background: rgba(251, 191, 36, 0.8);
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         .video-overlay {
@@ -226,6 +316,109 @@
         .video-date {
             color: #999;
             font-size: 0.8rem;
+        }
+
+        .video-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .video-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .video-action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid #e5e7eb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            border-color: #1e3a8a;
+        }
+
+        .action-btn.liked {
+            background: #fbbf24;
+            border-color: #fbbf24;
+            color: #1e3a8a;
+        }
+
+        .help-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .help-title {
+            color: #1e3a8a;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .help-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .help-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .help-item h4 {
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .help-item p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .help-toggle {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .help-toggle:hover {
+            transform: translateY(-2px);
         }
 
         /* Upload Section */
@@ -463,6 +656,40 @@
         <h1 class="page-title">Galeri Video OSIS</h1>
         <p class="page-subtitle">Dokumentasi kegiatan OSIS PMK Aspirasi dalam format video pendek</p>
 
+        <!-- Help Section -->
+        <button class="help-toggle" id="helpToggle">📚 Bantuan & Panduan</button>
+        <section class="help-section" id="helpSection" style="display: none;">
+            <h2 class="help-title">
+                🎥 Panduan Menggunakan Galeri Video
+            </h2>
+            <div class="help-content">
+                <div class="help-item">
+                    <h4>🎬 Memutar Video</h4>
+                    <p>Klik tombol play di tengah video atau klik langsung pada video untuk memulai pemutaran. Gunakan kontrol di bawah untuk mengatur volume dan progress.</p>
+                </div>
+                <div class="help-item">
+                    <h4>🔍 Filter Kategori</h4>
+                    <p>Gunakan tombol filter di atas untuk melihat video berdasarkan kategori: Edukasi, Sosial, Keagamaan, Olahraga, atau Seni & Budaya.</p>
+                </div>
+                <div class="help-item">
+                    <h4>📤 Upload Video</h4>
+                    <p>Login sebagai admin untuk mengupload video baru. Isi judul, pilih kategori, tambahkan deskripsi, dan pilih file video dari perangkat Anda.</p>
+                </div>
+                <div class="help-item">
+                    <h4>👍 Interaksi Video</h4>
+                    <p>Berikan like pada video yang Anda sukai dan bagikan ke teman-teman. Lihat statistik views dan likes di setiap video.</p>
+                </div>
+                <div class="help-item">
+                    <h4>📱 Responsif</h4>
+                    <p>Galeri video dapat diakses dari berbagai perangkat: desktop, tablet, dan smartphone dengan tampilan yang optimal.</p>
+                </div>
+                <div class="help-item">
+                    <h4>🔐 Login Admin</h4>
+                    <p>Gunakan username: <strong>admin</strong> dan password: <strong>osis2024</strong> untuk mengakses fitur upload dan manajemen video.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Upload Section (Hidden by default) -->
         <section class="upload-section" id="uploadSection">
             <h2 style="color: #1e3a8a; margin-bottom: 1rem;">Upload Video Baru</h2>
@@ -538,6 +765,10 @@
                 category: "Sosial",
                 description: "Dokumentasi kegiatan bakti sosial OSIS di panti asuhan",
                 date: "2024-01-15",
+                views: 245,
+                likes: 32,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%231e3a8a'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='16' font-family='Poppins'%3EBakti Sosial%3C/text%3E%3C/svg%3E"
             },
             {
@@ -546,6 +777,10 @@
                 category: "Edukasi",
                 description: "Pelatihan kepemimpinan untuk anggota OSIS baru",
                 date: "2024-01-20",
+                views: 189,
+                likes: 28,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%23fbbf24'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='%231e3a8a' font-size='16' font-family='Poppins'%3EWorkshop%3C/text%3E%3C/svg%3E"
             },
             {
@@ -554,6 +789,10 @@
                 category: "Keagamaan",
                 description: "Acara peringatan Maulid Nabi Muhammad SAW",
                 date: "2024-01-25",
+                views: 312,
+                likes: 45,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%2306b6d4'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='16' font-family='Poppins'%3EMaulid Nabi%3C/text%3E%3C/svg%3E"
             },
             {
@@ -562,6 +801,10 @@
                 category: "Olahraga",
                 description: "Kompetisi futsal antar kelas",
                 date: "2024-02-01",
+                views: 156,
+                likes: 22,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%2310b981'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='16' font-family='Poppins'%3ETurnamen Futsal%3C/text%3E%3C/svg%3E"
             },
             {
@@ -570,6 +813,10 @@
                 category: "Seni",
                 description: "Pertunjukan seni dan budaya siswa",
                 date: "2024-02-05",
+                views: 278,
+                likes: 38,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%23f59e0b'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='16' font-family='Poppins'%3EPentas Seni%3C/text%3E%3C/svg%3E"
             },
             {
@@ -578,6 +825,10 @@
                 category: "Edukasi",
                 description: "Seminar motivasi untuk siswa kelas 12",
                 date: "2024-02-10",
+                views: 203,
+                likes: 31,
+                isLiked: false,
+                videoUrl: null,
                 thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%238b5cf6'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='16' font-family='Poppins'%3ESeminar Motivasi%3C/text%3E%3C/svg%3E"
             }
         ];
@@ -597,6 +848,8 @@
         const uploadForm = document.getElementById('uploadForm');
         const videoGallery = document.getElementById('videoGallery');
         const filterBtns = document.querySelectorAll('.filter-btn');
+        const helpToggle = document.getElementById('helpToggle');
+        const helpSection = document.getElementById('helpSection');
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -636,6 +889,17 @@
                     btn.classList.add('active');
                     filterVideos(btn.dataset.category);
                 });
+            });
+
+            // Help toggle
+            helpToggle.addEventListener('click', () => {
+                if (helpSection.style.display === 'none') {
+                    helpSection.style.display = 'block';
+                    helpToggle.textContent = '📚 Sembunyikan Bantuan';
+                } else {
+                    helpSection.style.display = 'none';
+                    helpToggle.textContent = '📚 Bantuan & Panduan';
+                }
             });
         }
 
@@ -690,6 +954,9 @@
                 return;
             }
 
+            // Create video URL from file
+            const videoUrl = URL.createObjectURL(file);
+            
             // Create new video object
             const newVideo = {
                 id: Date.now(),
@@ -697,6 +964,10 @@
                 category: category,
                 description: description,
                 date: new Date().toISOString().split('T')[0],
+                views: 0,
+                likes: 0,
+                isLiked: false,
+                videoUrl: videoUrl,
                 thumbnail: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='400' viewBox='0 0 280 400'%3E%3Crect width='280' height='400' fill='%231e3a8a'/%3E%3Ctext x='140' y='200' text-anchor='middle' fill='white' font-size='14' font-family='Poppins'%3E${title}%3C/text%3E%3C/svg%3E`
             };
 
@@ -726,9 +997,30 @@
             videos.forEach(video => {
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
+                
+                const videoElement = video.videoUrl ? 
+                    `<video class="video-player" data-video-id="${video.id}" preload="metadata">
+                        <source src="${video.videoUrl}" type="video/mp4">
+                        Video tidak dapat diputar
+                    </video>` :
+                    `<img src="${video.thumbnail}" alt="${video.title}" class="video-player">`;
+                
                 videoCard.innerHTML = `
-                    <div class="video-container">
-                        <img src="${video.thumbnail}" alt="${video.title}" class="video-player">
+                    <div class="video-container" data-video-id="${video.id}">
+                        ${videoElement}
+                        <div class="play-overlay" data-video-id="${video.id}">
+                            <span>▶️</span>
+                        </div>
+                        <div class="video-controls" data-video-id="${video.id}">
+                            <div class="video-progress" data-video-id="${video.id}">
+                                <div class="video-progress-bar" data-video-id="${video.id}"></div>
+                            </div>
+                            <div class="video-buttons">
+                                <button class="video-btn play-pause-btn" data-video-id="${video.id}">⏸️</button>
+                                <button class="video-btn volume-btn" data-video-id="${video.id}">🔊</button>
+                                <span class="video-time" data-video-id="${video.id}">0:00 / 0:00</span>
+                            </div>
+                        </div>
                         <div class="video-overlay">
                             <div class="video-title">${video.title}</div>
                             <span class="video-category">${video.category}</span>
@@ -737,15 +1029,176 @@
                     <div class="video-info">
                         <div class="video-description">${video.description}</div>
                         <div class="video-date">${formatDate(video.date)}</div>
+                        <div class="video-actions">
+                            <div class="video-stats">
+                                <span>👁️ ${video.views} views</span>
+                                <span>👍 ${video.likes} likes</span>
+                            </div>
+                            <div class="video-action-btns">
+                                <button class="action-btn like-btn ${video.isLiked ? 'liked' : ''}" data-video-id="${video.id}">
+                                    👍 Like
+                                </button>
+                                <button class="action-btn share-btn" data-video-id="${video.id}">
+                                    📤 Share
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 `;
                 videoGallery.appendChild(videoCard);
             });
+            
+            // Add event listeners for video controls
+            setupVideoControls();
         }
 
         function formatDate(dateString) {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        function setupVideoControls() {
+            // Play/pause functionality
+            document.querySelectorAll('.play-overlay, .video-player').forEach(element => {
+                element.addEventListener('click', (e) => {
+                    const videoId = e.target.dataset.videoId || e.target.closest('[data-video-id]').dataset.videoId;
+                    const video = document.querySelector(`video[data-video-id="${videoId}"]`);
+                    if (video) {
+                        if (video.paused) {
+                            video.play();
+                            incrementViews(videoId);
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            });
+
+            // Play/pause button
+            document.querySelectorAll('.play-pause-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const videoId = e.target.dataset.videoId;
+                    const video = document.querySelector(`video[data-video-id="${videoId}"]`);
+                    if (video) {
+                        if (video.paused) {
+                            video.play();
+                            btn.textContent = '⏸️';
+                        } else {
+                            video.pause();
+                            btn.textContent = '▶️';
+                        }
+                    }
+                });
+            });
+
+            // Volume button
+            document.querySelectorAll('.volume-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const videoId = e.target.dataset.videoId;
+                    const video = document.querySelector(`video[data-video-id="${videoId}"]`);
+                    if (video) {
+                        video.muted = !video.muted;
+                        btn.textContent = video.muted ? '🔇' : '🔊';
+                    }
+                });
+            });
+
+            // Progress bar
+            document.querySelectorAll('.video-progress').forEach(progress => {
+                progress.addEventListener('click', (e) => {
+                    const videoId = e.target.dataset.videoId || e.target.closest('[data-video-id]').dataset.videoId;
+                    const video = document.querySelector(`video[data-video-id="${videoId}"]`);
+                    if (video) {
+                        const rect = progress.getBoundingClientRect();
+                        const percent = (e.clientX - rect.left) / rect.width;
+                        video.currentTime = percent * video.duration;
+                    }
+                });
+            });
+
+            // Video time update
+            document.querySelectorAll('video').forEach(video => {
+                video.addEventListener('timeupdate', () => {
+                    const videoId = video.dataset.videoId;
+                    const progressBar = document.querySelector(`.video-progress-bar[data-video-id="${videoId}"]`);
+                    const timeDisplay = document.querySelector(`.video-time[data-video-id="${videoId}"]`);
+                    
+                    if (progressBar && video.duration) {
+                        const percent = (video.currentTime / video.duration) * 100;
+                        progressBar.style.width = percent + '%';
+                    }
+                    
+                    if (timeDisplay && video.duration) {
+                        const current = formatTime(video.currentTime);
+                        const total = formatTime(video.duration);
+                        timeDisplay.textContent = `${current} / ${total}`;
+                    }
+                });
+            });
+
+            // Like button
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const videoId = parseInt(e.target.dataset.videoId);
+                    toggleLike(videoId);
+                });
+            });
+
+            // Share button
+            document.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const videoId = e.target.dataset.videoId;
+                    const video = currentVideos.find(v => v.id == videoId);
+                    if (video) {
+                        navigator.clipboard.writeText(`Lihat video "${video.title}" di Galeri Video OSIS PMK Aspirasi!`);
+                        alert('Link video berhasil disalin!');
+                    }
+                });
+            });
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function incrementViews(videoId) {
+            const video = sampleVideos.find(v => v.id == videoId);
+            if (video) {
+                video.views++;
+                // Update display
+                const statsElement = document.querySelector(`[data-video-id="${videoId}"]`).closest('.video-card').querySelector('.video-stats');
+                if (statsElement) {
+                    statsElement.innerHTML = `
+                        <span>👁️ ${video.views} views</span>
+                        <span>👍 ${video.likes} likes</span>
+                    `;
+                }
+            }
+        }
+
+        function toggleLike(videoId) {
+            const video = sampleVideos.find(v => v.id == videoId);
+            if (video) {
+                video.isLiked = !video.isLiked;
+                video.likes += video.isLiked ? 1 : -1;
+                
+                // Update display
+                const likeBtn = document.querySelector(`.like-btn[data-video-id="${videoId}"]`);
+                const statsElement = document.querySelector(`[data-video-id="${videoId}"]`).closest('.video-card').querySelector('.video-stats');
+                
+                if (likeBtn) {
+                    likeBtn.classList.toggle('liked', video.isLiked);
+                }
+                
+                if (statsElement) {
+                    statsElement.innerHTML = `
+                        <span>👁️ ${video.views} views</span>
+                        <span>👍 ${video.likes} likes</span>
+                    `;
+                }
+            }
         }
 
         // Intersection Observer for video autoplay simulation
@@ -774,5 +1227,5 @@
         // Call observe function after rendering
         setTimeout(observeVideoCards, 100);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987984c721622925',t:'MTc1OTI5NjEwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9879a640d2542925',t:'MTc1OTI5NzQ4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
